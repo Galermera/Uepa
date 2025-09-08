@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animação DVD com Coração</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+    }
+
+    #heart {
+      position: absolute;
+      font-size: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      transition: color 0.2s ease; /* suaviza a troca de cor */
+    }
+
+    #heart span {
+      position: absolute;
+      font-size: 20px;
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- O coração + frase -->
+  <div id="heart">❤️ <span>Te amo, india potiguara!</span></div>
+
+  <script>
+    const heart = document.getElementById("heart");
+    const colors = ["red", "blue", "green", "yellow", "pink", "orange", "purple"];
+
+    let x = 100;
+    let y = 100;
+    let dx = 2; // velocidade no eixo X
+    let dy = 2; // velocidade no eixo Y
+
+    function animate() {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+
+      const heartWidth = heart.offsetWidth;
+      const heartHeight = heart.offsetHeight;
+
+      // Mover
+      x += dx;
+      y += dy;
+
+      let bateu = false;
+
+      // Detectar colisão com as bordas
+      if (x + heartWidth >= screenWidth || x <= 0) {
+        dx *= -1;
+        bateu = true;
+      }
+      if (y + heartHeight >= screenHeight || y <= 0) {
+        dy *= -1;
+        bateu = true;
+      }
+
+      // Trocar cor se bateu na borda
+      if (bateu) {
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.color = randomColor;
+      }
+
+      // Aplicar posição
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
